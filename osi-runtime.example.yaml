@@ -1,0 +1,25 @@
+# osi-runtime-mcp — optional per-deployment config.
+#
+# v1 reads NOTHING from this file; it's a placeholder for v2 when we add:
+#   - per-project secret-name allowlist additions
+#   - per-project regex pattern additions
+#   - HTTP transport bearer-token map (Symphony, Claude Code, etc.)
+
+allowlist_overrides:
+  # Add additional secret-environment-variable names to the redaction pipeline.
+  # Names match case-insensitively; see osi_runtime_mcp/redact.py SECRET_NAME_LITERALS
+  # for the built-in list.
+  extra_secret_names:
+    - MY_PROJECT_SPECIFIC_TOKEN
+
+extra_redaction_patterns:
+  # Per-project regex extensions. Match-side only — no replacement template needed.
+  # Example: anything that looks like a custom internal hash format.
+  # - "\\bcust_[A-Za-z0-9]{32}\\b"
+
+# Reserved for v2 HTTP transport
+http_transport:
+  enabled: false
+  bind: "127.0.0.1:8050"
+  bearer_token_env: "OSI_RUNTIME_MCP_TOKEN"
+  per_token_project_acl: {}
